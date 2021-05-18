@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tab栏切换影响swiper插件的自动轮播功能</title>
+    <link rel="stylesheet" href="./swiper.min.css">
+    <style>
+        .content{
+            width: 94%;
+            /* height: 107vw; */
+            height: auto;
+            background: #fff;
+            margin-left: 3%;
+            margin-top: 7vw;
+            border-radius: 3vw;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.16);
+            padding: 4.5vw 2.4vw;
+            box-sizing: border-box;
+        }
+        ul{
+            display: flex;
+        }
+        li{
+            list-style: none;
+        }
+        .title ul li:nth-child(n+2){
+            margin-left: 4vw;
+        }
+        .title ul span{
+            width: 13vw;
+            height: 1.3vw;
+            background: linear-gradient(135deg, #D22B2A 0%, #F27B7B 100%);
+            border-radius: 13vw;
+            position: absolute;
+            top: 15.5vw;
+            left: 15.5vw;
+            display: none;
+        }
+        .title li:nth-child(2) span {
+            left: 36.5vw;
+        }
+        .title li:nth-child(3) span {
+            left: 57.5vw;
+        }
+        .one{
+            width: 200px;
+            height: auto;
+            background-color: orange;
+        }
+        .two{
+            width: 200px;
+            /* height: 200px; */
+            background-color: pink;
+        }
+        .three{
+            width: 200px;
+            /* height: 200px; */
+            background-color: skyblue;
+        }
+        .active {
+            background: linear-gradient(135deg, #D22B2A 0%, #F27B7B 100%);
+        }
+        /* 控制切换内容显示隐藏（重点内容） */
+        .hide {
+            visibility: hidden;
+            position: absolute;
+            z-index: -1;
+            height: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="title">
+            <ul>
+                 <li data-index="0">公司详情 <span></span></li>
+                 <li data-index="1">品牌详情 <span></span></li>
+                 <li data-index="2" class="productDetailTitle">产品详情 <span></span></li>
+             </ul>
+        </div>
+         <!--公司详情-->
+        <div class="one swiper-container" id="swiper1">
+            <ul class="swiper-wrapper">
+                <li class="swiper-slide">1</li>
+                <li class="swiper-slide">2</li>
+                <li class="swiper-slide">3</li>
+                <li class="swiper-slide">4</li>
+                <li class="swiper-slide">5</li>
+            </ul>
+        </div>
+        <div class="two">
+            富含哲理的简编文学,微语录精选唯美图片和触动人心的经典文字,分享人生感悟、情感、哲理、唯美、心情、励志等一句话的经典语录,第一时间提供一句话经典语录大全
+        </div>
+        <div class="three">
+        </div>
+       
+    </div>
+    <script src='https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js'></script>
+    <script type="text/javascript" src="./swiper.min.js"></script>
+    <script>
+          swiper_1 = new Swiper('#swiper1', {
+            observer: true,
+            observeParents: true,
+            autoplayDisableOnInteraction: false,
+            slidesPerView: 1,
+            // 轮播图的方向，也可以是vertical方向
+            direction: 'horizontal',
+            //轮播方式
+            loop: true,
+            // 自动播放时间
+            autoplay: true,
+            // 播放的速度
+            speed: 2000,
+            //懒加载
+            lazy: {
+                loadPrevNext: true,
+                loadPrevNextAmount: 1,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
+
+        $('.content ul li').click(function () {
+            $(this).find('span').addClass('active').siblings().removeClass('active');
+            $(this).find('span').css({ 'display': 'block' });
+            $(this).siblings().find('span').css({ 'display': 'none' });
+            $('.content>div').eq($(this).index() + 1).removeClass('hide').siblings().addClass('hide').siblings('.title').removeClass('hide');
+       })
+
+       $(function () {
+            $('.content li:nth-child(1) span').addClass('active');
+            $('.content li:nth-child(1)').find('span').css({ 'display': 'block' })
+            $('.content>div').eq($('.m_companyDetails_title li:nth-child(1)').index() + 1).removeClass('hide').siblings().addClass('hide').siblings('.title').removeClass('hide');
+       })
+    </script>
+</body>
+</html>
